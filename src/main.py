@@ -1,30 +1,24 @@
 from typing import Union
 from fastapi import FastAPI
-from google.cloud import translate_v2 as translate
-from google.oauth2 import service_account
+from googletrans import Translator
+from settings import Settings as conf
 
 app = FastAPI()
-API_ENDPOINT = "https://translation.googleapis.com/language/translate/v2"
-API_KEY = "AIzaSyDv6Vn1MPww8ZU4aVWMrPqz1g7MGRiJ6jg"
-creds = service_account.Credentials.from_service_account_file("../key_file.json")
-translate_client = translate.Client(credentials=creds)
+translate_client = Translator()
 
 
 @app.get("/")
-def read_root():
-    result = translate_client.translate("matin", target_language="en", source_language="fr")
+def read_default():
+    result = translate_client.translate(text="matin", dest=conf.destination_language, src=conf.source_language)
     return result
 
 
 @app.get("/words-list")
-def read_root():
-    # translation = translator.translate("good morning", dest='ru')
-    # print(translation.text)
+def words_list():
     return {"List": "Words"}
 
 
-@app.get("/words/{word_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"word_id": item_id, "q": q}
-
-
+@app.put("/translate-word/{word}")
+async def translate_word(word: str):
+    result = translate_client.translate(text=word, dest=conf.destination_language, src=conf.source_language)
+    return result
