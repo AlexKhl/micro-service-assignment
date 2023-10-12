@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "PROJECT_ID",
+  "private_key_id": "PRIVATE_KEY_ID",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nwudq1JvM17RhqC0CXxDt9ay7lusmCbxL31yC1RMYHGu88ykaRehC9Gkaq43iv2NL9nudukNOmocq8T1tSQcHabsYF6Ig9Ko5A4yx6wi1b5Aca7UGsil6npNq5Z2emEgK7QNEEKbnii2GqI3fndCKmEnNQWiU45jlzra2iZW7yGYoFhg29iLZ0r0WQMtNfMGFML5f3d5UWtzEjyuoIvh6h2XNfI2d6b28xfWE6kqygEXcfWJX6RE69OudOloqw2fZz994yeHJTSRB6CC8Pyd17OT3eFfiF4aHABSo3iYaGyHQoYwwA4aJNb4UN24QOwlOxx80BQSonpriOKnBx7h8qCALvQwUoi4926fBwmjm2Dim4m81Lg6ojeeczOxu4eEHHzDUbiagywmy1KXqQcXiGXoqb5WxAk7WnGxALfv4qGS0DVTXkFscE3SE5FDMQ8lWohwCP3wqkOqfjnvxKMu4Eip7cj9G0DKPvEkIcqw8olJvTWhfHTgKbEsR2wD2zqhVpbpR9SgDn86s6Dmpao1AfRak55NkPLbiNmth894SWp3HBOgEd66sAob8NvWah9y5k3c1trw6FbDMj65FNH3mujjvMlswSV3ZJibJ52dnZZTRnA6hzHHkmiSG8NmrJpPK3nFg8tpqR4mJchuuHy1a24lvZmeFJ3uKbguRuPxyNa1mtw6pj5MpvS6NEKIqCfqAZ5eS53NkoNxi3QGxwIEnyVDDOhf8Lao26OxqhZEUnUPNDj2QSZ9S8FhvHon3RvDWXUh2R9Eee5jKMtVn5rTIo4vEozJ5XiOl2lKnou73iNeKk4gSIctwum8R00aJoQw6UtwSXiU5cA9KSxF0l4c37uo1T6xaLWd7VGjC7DHk0VkczH5lyaCmAmhF5WH3vdwKgVWAj7DKuXMRWC9yJK4GkM3te7TLbQnNXHN7OpySxbh3WPIJ1y7A7AZZwSXqG7QVHrbdflOlf8C4hOvvnMSfIh52o5z63R6z2Mv8UChQJCFTV78KNRPech9bqEdarbKU\n-----END PRIVATE KEY-----\n",
+  "client_email": "CLIENT_EMAIL@SERVICEACCOUNT.COM",
+  "client_id": "589688124542677952012",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/CLIENT_EMAIL@SERVICEACCOUNT.COM",
+  "universe_domain": "googleapis.com"
+}
