@@ -25,7 +25,8 @@ class TranslationBase(BaseModel):
 
 
 class TranslationCreate(TranslationBase):
-    pass
+    translation: str
+    language: str
 
 
 class Translation(TranslationBase):

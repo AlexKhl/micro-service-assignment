@@ -8,7 +8,8 @@ class Word(Base):
     __tablename__ = "words"
 
     id = Column(Integer, primary_key=True, index=True)
-    word = Column(String, unique=True, index=True)
+    word = Column(String, unique=False, index=True)
+    language = Column(String, unique=False, index=True)
 
     # translation_rel = relationship("Translate", back_populates="word_rel")
 

@@ -8,7 +8,7 @@ from db.database import SessionLocal, engine, Base
 from db import crud, db_models, schemas
 
 app = FastAPI()
-translate_client = Translator()
+
 
 # Dependency
 def get_db():
@@ -18,29 +18,21 @@ def get_db():
     finally:
         db.close()
 
+
 def create_tables():
     Base.metadata.create_all(bind=engine)
+
 
 @app.on_event("startup")
 def startup():
     create_tables()
 
 
-@app.get("/")
-def read_default():
-    result = translate_client.translate(text="matin", dest=conf.destination_language, src=conf.source_language)
-    return result
-
-
 @app.get("/words-list")
-def words_list():
+def words_list(db: Session = Depends(get_db)):
+    result = crud.get_words(db)
+    print(result)
     return {"List": "Words"}
-
-
-@app.put("/translate-word/{word}")
-async def translate_word(word: str):
-    result = translate_client.translate(text=word, dest=conf.destination_language, src=conf.source_language)
-    return result
 
 
 @app.post("/words/", response_model=schemas.Word)
