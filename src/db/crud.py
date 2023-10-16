@@ -1,5 +1,6 @@
 import os
 import sys
+
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, ROOT_DIR)
 import settings as conf
@@ -7,18 +8,21 @@ import settings as conf
 sys.path.append('utils/')
 import translate as trans
 
-
 from sqlalchemy.orm import Session
 from . import db_models, schemas
-
 
 
 def get_word(db: Session, word: str):
     return db.query(db_models.Word).filter(db_models.Word.word == word).first()
 
 
-def get_words(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(db_models.Word).offset(skip).limit(limit).all()
+def get_words(db: Session, query_string='__ALL__', page=1, page_size: int = 50, skip: int = 0, limit: int = 100):
+    if query_string == '__ALL__':
+        return db.query(db_models.Word).order_by(db_models.Word.word).offset((page - 1) * page_size).limit(
+            page_size).all()
+    else:
+        return db.query(db_models.Word).filter(db_models.Word.word.ilike(f"%{query_string}%")).order_by(
+            db_models.Word.word).offset((page - 1) * page_size).limit(page_size).all()
 
 
 # TODO change source_language to more flexible option like global variable or conf variable with the possibility to
@@ -36,6 +40,16 @@ def create_word(db: Session, word: schemas.WordCreate):
     if not translation:
         create_translation(db, trans_word, conf.Settings.destination_language, word_id=db_word.id)
     return db_word
+
+
+def delete_word(db: Session, word: str):
+    item = db.query(db_models.Word).filter(db_models.Word.word == word).first()
+    if item:
+        db.delete(item)
+        db.commit()
+        return {"word": item.word, "status": "deleted"}
+    else:
+        return {"word": item.word, "status": "not found"}
 
 
 def get_translation(db: Session, word_id: int):
