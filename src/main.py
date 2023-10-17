@@ -40,14 +40,19 @@ def generate_words(db: Session = Depends(get_db)):
     return crud.get_words(db, '', 1, 50)
 
 
-@app.get("/words-list/{query_string}/{page}/{page_size}", response_model=List[schemas.Word])
+@app.get("/words-list/{query_string}/{page}/{page_size}/{synonyms}/{translations}", response_model=List[schemas.Word])
 def words_list(
         query_string: str,
         page: int,
         page_size: int,
+        synonyms: str,
+        translations: str,
         db: Session = Depends(get_db)
 ) -> List[schemas.Word]:
-    result = crud.get_words(db, query_string, page, page_size)
+    if synonyms == "YES" or translations == 'Yes':
+        result = crud.get_words_with_synonyms(db, query_string, page, page_size)
+    else:
+        result = crud.get_words(db, query_string, page, page_size)
     return result
 
 

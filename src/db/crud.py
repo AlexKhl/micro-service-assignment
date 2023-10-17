@@ -8,7 +8,7 @@ import settings as conf
 sys.path.append('utils/')
 import translate as trans
 
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload, defaultload, lazyload, relationship, contains_eager, outerjoin
 from . import db_models, schemas
 
 
@@ -23,6 +23,30 @@ def get_words(db: Session, query_string='__ALL__', page=1, page_size: int = 50, 
     else:
         return db.query(db_models.Word).filter(db_models.Word.word.ilike(f"%{query_string}%")).order_by(
             db_models.Word.word).offset((page - 1) * page_size).limit(page_size).all()
+
+
+def get_words_with_synonyms(db: Session, query_string='__ALL__', page=1, page_size: int = 50, skip: int = 0, limit: int = 100):
+    result = (db.query(db_models.Word, db_models.Translate)
+            .filter(db_models.Word.word.ilike(f"%{query_string}%"))
+            .join(db_models.Word.translation_rel)
+            .order_by(db_models.Translate.translation)
+            .offset((page - 1) * page_size)
+            .limit(page_size)
+            .all()
+            )
+    words_with_synonyms = []
+    for word, translation in result:
+        words_with_synonyms.append({
+            "id": word.id,
+            "word_id": word.id,
+            "word": word.word,
+            "language": word.language,
+            "translation_id": translation.id,
+            "translation": translation.translation,
+            "synonyms": [synonym.synonym for synonym in translation.synonyms]
+        })
+    return words_with_synonyms
+
 
 
 # TODO change source_language to more flexible option like global variable or conf variable with the possibility to

@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, ForeignKeyConstraint
 from sqlalchemy.orm import relationship
 
 from .database import Base
@@ -11,7 +11,7 @@ class Word(Base):
     word = Column(String, unique=False, index=True)
     language = Column(String, unique=False, index=True)
 
-    # translation_rel = relationship("Translate", back_populates="word_rel")
+    translation_rel = relationship("Translate", back_populates="word_rel")
 
 
 class Translate(Base):
@@ -22,8 +22,8 @@ class Translate(Base):
     translation = Column(String, unique=False, index=True)
     word_id = Column(Integer, ForeignKey("words.id"))
 
-    # word_rel = relationship("Translate", back_populates="translation_rel")
-    # synonyms = relationship("Synonyms", back_populates="synonym_rel")
+    word_rel = relationship("Word", back_populates="translation_rel")
+    synonyms = relationship("Synonym", back_populates="synonym_rel")
 
 
 class Synonym(Base):
@@ -33,4 +33,4 @@ class Synonym(Base):
     synonym = Column(String, unique=False, index=True)
     translation_id = Column(Integer, ForeignKey("translates.id"))
 
-    # synonym_rel = relationship("Translate", back_populates="synonyms")
+    synonym_rel = relationship("Translate", back_populates="synonyms")

@@ -40,6 +40,7 @@ class Translation(TranslationBase):
 
 class WordBase(BaseModel):
     word: str
+    language: str
 
 
 class WordCreate(WordBase):
@@ -48,6 +49,7 @@ class WordCreate(WordBase):
 
 class Word(WordBase):
     id: int
+    translates: List[Translation] = []
 
     class Config:
         orm_mode = True
